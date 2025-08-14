@@ -19,7 +19,7 @@ export default function LandingNavbar() {
     { name: "Home", to: "home" },
     { name: "About", to: "about" },
     { name: "Blogs", to: "portfolio" },
-    // { name: "Services", to: "services" },
+    { name: "Services", to: "services" },
     { name: "Contact", to: "contact" },
   ];
 

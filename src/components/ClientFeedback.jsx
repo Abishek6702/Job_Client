@@ -60,7 +60,7 @@ const ClientFeedback = () => {
         </h2>
         <div className="max-w-4xl mx-auto relative">
           
-          <div className="absolute top-0 left-0 -ml-24 flex flex-wrap justify-center w-24">
+          <div className="absolute top-0 left-0 -ml-24 lg:flex hidden flex-wrap justify-center w-24">
             {avatars.slice(0, 4).map((avatar, index) => {
               const top = Math.floor(Math.random() * 40); 
               const left = Math.floor(Math.random() * 40); 
@@ -79,7 +79,7 @@ const ClientFeedback = () => {
             })}
           </div>
 
-          <div className="absolute top-0 right-0 -mr-24 flex flex-wrap justify-center w-24">
+          <div className="absolute top-0 right-0 -mr-24 lg:flex flex-wrap justify-center w-24 hidden ">
             {avatars.slice(4).map((avatar, index) => {
               const top = Math.floor(Math.random() * 40);
               const right = Math.floor(Math.random() * 40);
