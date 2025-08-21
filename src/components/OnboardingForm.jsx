@@ -18,6 +18,7 @@ import ExperienceStep from "./steps/ExperienceStep";
 import PreferencesStep from "./steps/PreferencesStep";
 import UploadsStep from "./steps/UploadsStep";
 import PreviewStep from "./steps/PreviewStep";
+import ConfirmModal from "./ConfirmModal";
 
 const steps = [
   "Personal Info",
@@ -38,6 +39,9 @@ const stepIcons = [
 ];
 
 export default function OnboardingForm() {
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -84,6 +88,9 @@ export default function OnboardingForm() {
     "Review and submit your information",
   ];
 
+
+console.log("formdata",formData);
+
   // Validation for each step (keep your same logic here)
   const validateStep = () => {
     let errors = {};
@@ -104,9 +111,10 @@ export default function OnboardingForm() {
           errors[fieldName] = `${label} is required`;
         } else if (edu[fieldName].trim().length < 2) {
           errors[fieldName] = `${label} Enter proper input`;
-        } else if (!alphaSpace.test(edu[fieldName].trim())) {
-          errors[fieldName] = `${label} should contain only letters and spaces`;
-        }
+        } 
+        // else if (!alphaSpace.test(edu[fieldName].trim())) {
+        //   errors[fieldName] = `${label} should contain only letters and spaces`;
+        // }
       };
 
       checkMin4("level", "Education level");
@@ -195,6 +203,8 @@ export default function OnboardingForm() {
       form.append("experience", JSON.stringify(formData.experience));
       form.append("preferredRoles", JSON.stringify(formData.preferredRoles));
       form.append("skills", JSON.stringify(formData.skills));
+      form.append("careerGapStart", JSON.stringify(formData.careerGap.yearFrom));
+      form.append("careerGapEnd", JSON.stringify(formData.careerGap.yearTo));
 
       if (formData.profileImage)
         form.append("profileImage", formData.profileImage);
@@ -246,8 +256,23 @@ export default function OnboardingForm() {
     default:
       StepComponent = null;
   }
+  
 
   return (
+    <>
+    {showConfirmModal && (
+  <ConfirmModal
+    title="Confirm Submission"
+    message="Are you sure you want to submit your onboarding information?"
+    confirmLabel="Yes, Submit"
+    onConfirm={async () => {
+      setShowConfirmModal(false);
+      await handleSubmit();
+    }}
+    onCancel={() => setShowConfirmModal(false)}
+  />
+)}
+
     <div className="flex flex-col md:flex-row lg:flex-row min-h-screen">
       {/* Mobile/Tablet Top Stepper */}
       <div className="block md:hidden border-b border-gray-200 p-4 overflow-x-auto mt-4">
@@ -290,7 +315,7 @@ export default function OnboardingForm() {
 
       {/* Desktop Sidebar Stepper */}
       <div className="hidden md:block md:w-[40%] lg:w-[30%] bg-gray-50 p-8 border-r border-gray-200 sticky top-0 overflow-y-auto ">
-        <ol className="ml-10 mt-10">
+        <ol className="ml-10">
           {steps.map((step, idx) => (
             <motion.li
               key={step}
@@ -349,18 +374,19 @@ export default function OnboardingForm() {
       </div>
 
       {/* Main Content */}
-      <div className="w-full lg:w-[70%] flex  p-4 lg:p-8 ">
+      <div className="w-full lg:w-[70%] h-[95vh] flex  p-4 lg:p-8 overflow-y-auto">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             if (validateStep()) {
               if (currentStep === steps.length - 1) {
-                handleSubmit();
+                setShowConfirmModal(true); // <-- show confirmation modal instead
               } else {
                 nextStep();
               }
             }
           }}
+          
           encType="multipart/form-data"
           className="w-full max-w-3xl  md:mt-14 lg:mt-10"
         >
@@ -394,5 +420,6 @@ export default function OnboardingForm() {
         </form>
       </div>
     </div>
+    </>
   );
 }

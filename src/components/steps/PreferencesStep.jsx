@@ -99,6 +99,7 @@ export default function PreferencesStep({ formData, setFormData, errors }) {
           <label className="font-bold">
             Skills (comma separated) <span className="text-red-500">*</span>
           </label>
+          {/* <p className="text-gray-400">Add maximum of 5 skills</p> */}
           <textarea
             value={formData.skillsInput}
             onChange={handleSkillsChange}

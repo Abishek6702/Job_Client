@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AutoCarousel from "./AutoCarousel";
 import { toast } from 'react-toastify';
 import logo from "../assets/logomain.svg"
+import AutoCarousel1 from "./AutoCarousel1";
 const SignupForm = () => {
   const [apiError, setApiError] = useState("");
   const navigate = useNavigate();
@@ -179,9 +180,9 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="w-[100%] h-[100vh] flex  bg-gray-50">
+    <div className="w-[100%] h-[100vh] flex justify-between bg-gray-50">
     
-      <div className="w-full  lg:w-[55%]  bg-white px-8 rounded-lg shadow-md">
+      <div className="w-full  lg:w-[45%] borde  px-8 rounded-lg m-auto">
         <div className="w-40">
           <img src={logo} alt="" />
         </div>
@@ -230,7 +231,7 @@ const SignupForm = () => {
                       id="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2 border rounded-md  ${
+                      className={`w-full px-4 py-2 border rounded-md focus:border-[#155dfc] focus:border-2 outline-none  ${
                         errors.name ? "border-red-500" : "border-gray-300"
                       }`}
                       placeholder="Enter your full name"
@@ -253,7 +254,7 @@ const SignupForm = () => {
                       id="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2 border rounded-md ${
+                      className={`w-full px-4 py-2 border rounded-md focus:border-[#155dfc] focus:border-2 outline-none ${
                         errors.email ? "border-red-500" : "border-gray-300"
                       }`}
                       placeholder="Enter your email"
@@ -278,7 +279,7 @@ const SignupForm = () => {
                       id="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2 border rounded-md ${
+                      className={`w-full px-4 py-2 border rounded-md focus:border-[#155dfc] focus:border-2 outline-none ${
                         errors.phone ? "border-red-500" : "border-gray-300"
                       }`}
                       placeholder="Enter your phone number"
@@ -305,7 +306,7 @@ const SignupForm = () => {
                       id="companyName"
                       value={formData.companyName}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2 border rounded-md  ${
+                      className={`w-full px-4 py-2 border rounded-md focus:border-[#155dfc] focus:border-2 outline-none  ${
                         errors.companyName
                           ? "border-red-500"
                           : "border-gray-300"
@@ -332,7 +333,7 @@ const SignupForm = () => {
                       id="companyEmail"
                       value={formData.companyEmail}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2 border rounded-md  ${
+                      className={`w-full px-4 py-2 border rounded-md focus:border-[#155dfc] focus:border-2 outline-none  ${
                         errors.companyEmail
                           ? "border-red-500"
                           : "border-gray-300"
@@ -359,7 +360,7 @@ const SignupForm = () => {
                       id="companyPhone"
                       value={formData.companyPhone}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2 border rounded-md   ${
+                      className={`w-full px-4 py-2 border rounded-md focus:border-[#155dfc] focus:border-2 outline-none   ${
                         errors.companyPhone
                           ? "border-red-500"
                           : "border-gray-300"
@@ -389,7 +390,7 @@ const SignupForm = () => {
                     id="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2 border rounded-md   ${
+                    className={`w-full px-4 py-2 border rounded-md  focus:border-[#155dfc] focus:border-2 outline-none ${
                       errors.password ? "border-red-500" : "border-gray-300"
                     }`}
                     placeholder="Create a password"
@@ -428,7 +429,7 @@ const SignupForm = () => {
                     id="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2 border rounded-md   ${
+                    className={`w-full px-4 py-2 border rounded-md  focus:border-[#155dfc] focus:border-2 outline-none  ${
                       errors.confirmPassword
                         ? "border-red-500"
                         : "border-gray-300"

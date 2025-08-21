@@ -1,85 +1,165 @@
-import React, { useState, useEffect } from "react";
-import img1 from "../assets/scroll_1.jpg";
-import img2 from "../assets/scroll_2.jpg";
-import img3 from "../assets/scroll_3.jpg";
+import React, { useEffect, useState } from "react";
 
-import loginimg from "../assets/login.jpg";
-// const slides = [
-//   {
-//     image: img1,
-//     title: "Login to your account",
-//     subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et",
-//   },
-//   {
-//     image: img2,
-//     title: "Explore our services",
-//     subtitle: "Discover solutions tailored to your business needs and goals.",
-//   },
-//   {
-//     image: img3,
-//     title: "Join our community",
-//     subtitle: "Be part of a network that values innovation and growth.",
-//   },
-// ];
+// Largest ring defines the container size
+const RING_RADII = [80, 140, 200, 260];
+const SIZE = RING_RADII[RING_RADII.length - 1] * 2;
+const CENTER = SIZE / 2;
 
-const AutoCarousel = () => {
-  // const [current, setCurrent] = useState(0);
+// Logos with assigned ring + angle
+const logos = [
+  // Ring 0 (innermost)
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", alt: "React", angle: 0, ring: 0 },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg", alt: "Vue", angle: 120, ring: 0 },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg", alt: "Angular", angle: 240, ring: 0 },
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrent((prev) => prev + 1);
-  //   }, 3000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  // Ring 1
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", alt: "Node.js", angle: 45, ring: 1 },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", alt: "Python", angle: 135, ring: 1 },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg", alt: "PHP", angle: 225, ring: 1 },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg", alt: "Ruby", angle: 315, ring: 1 },
 
-  // const displayIndex = current % slides.length;
+  // Ring 2
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", alt: "Java", angle: 0, ring: 2 },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg", alt: "C#", angle: 72, ring: 2 },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg", alt: "C++", angle: 144, ring: 2 },
+
+  // Ring 3 (outermost)
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", alt: "Docker", angle: 0, ring: 3 },
+  { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg", alt: "Kubernetes", angle: 60, ring: 3 },
+  { src: "https://icongr.am/devicon/amazonwebservices-original.svg?size=128    ", alt: "AWS", angle: 120, ring: 3 },
+   {
+    src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg',
+    alt: 'Azure',
+    angle: 180,
+    ring: 3,
+  },
+  {
+    src: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+    alt: 'Git',
+    angle: 240,
+    ring: 3,
+  },
+];
+
+
+export default function OrbitCarousel() {
+  const [visitorCount, setVisitorCount] = useState(null);
+
+  useEffect(() => {
+    const fetchVisitorCount = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/api/auth/first-time-login-count`
+        );
+        if (!res.ok) throw new Error("Failed to fetch visitor count");
+        const data = await res.json();
+        setVisitorCount(data.count);
+      } catch (err) {
+        console.error(err);
+        setVisitorCount(0);
+      }
+    };
+
+    fetchVisitorCount();
+  }, []);
 
   return (
-    <>
-      {" "}
-      <div className="w-[100%] h-[100vh] relative overflow-hidden">
-        {/* <div
-        className="flex transition-transform duration-700 ease-in-out"
-        style={{ transform: `translateX(-${displayIndex * 100}%)` }}
-      >
-        {slides.map((slide, index) => (
-          <div key={index} className="min-w-full h-[100vh] relative">
-            <img src={slide.image} alt={`Slide ${index}`} className="w-full h-full object-cover" />
-            <div className="  absolute bottom-[10%] left-0 right-0  p-6 text-white">
-              <h2 className="text-3xl font-semibold mb-2">{slide.title}</h2>
-              <p className="text-lg">{slide.subtitle}</p>
-            </div>
+    <div className="relative flex items-center justify-center w-full h-screen bg-white">
+      {/* Container that holds everything */}
+      <div className="relative" style={{ width: SIZE, height: SIZE }}>
+        {/* Center Image */}
+        <div
+          className="absolute bg-white border border-gray-300 shadow-lg rounded-full flex items-center justify-center"
+          style={{
+            width: 60,
+            height: 60,
+            left: CENTER - 30,
+            top: CENTER - 24,
+          }}
+        >
+          <img
+            src="https://randomuser.me/api/portraits/women/65.jpg"
+            alt="Center Logo"
+            className="w-full h-full object-cover rounded-full"
+          />
+        </div>
+
+        {/* Rings */}
+        {RING_RADII.map((radius, ringIndex) => (
+          <div
+            key={ringIndex}
+            className="absolute rounded-full border-2 border-dashed border-gray-400"
+            style={{
+              width: radius * 2,
+              height: radius * 2,
+              top: CENTER - radius,
+              left: CENTER - radius,
+              animation: `${ringIndex % 2 === 0 ? "spinClock" : "spinAnti"} ${
+                25 + ringIndex * 8
+              }s linear infinite`,
+            }}
+          >
+            {/* Logos on this ring */}
+            {logos
+              .filter((l) => l.ring === ringIndex)
+              .map(({ src, alt, angle }, i) => {
+                const theta = (angle * Math.PI) / 180;
+                const logoSize = 50;
+                const x = radius + radius * Math.cos(theta) - logoSize / 2;
+                const y = radius + radius * Math.sin(theta) - logoSize / 2;
+
+                return (
+                  <div
+                    key={i}
+                    className="absolute bg-white border border-gray-300 shadow-md rounded-full flex items-center justify-center"
+                    style={{
+                      width: logoSize,
+                      height: logoSize,
+                      left: x,
+                      top: y,
+                    }}
+                  >
+                    <img
+                      src={src}
+                      alt={alt}
+                      className="w-8 h-8 object-contain"
+                    />
+                  </div>
+                );
+              })}
           </div>
         ))}
       </div>
 
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrent(index)}
-            className={`w-3 h-3 rounded-full ${
-              displayIndex === index ? "bg-blue-600" : "bg-gray-400"
-            }`}
-          ></button>
-        ))}
-      </div> */}
-        <img src={loginimg} className="w-[100%] h-[100%] relative" />
-        <div className="absolute top-26 left-30 text-white font-bold text-xl leading-relaxed w-[73%] ">
-          <p className="text-3xl ">
-            Your career starts here — sign in to explore opportunities
-          </p>
-          <p className="text-lg font-semibold text-gray-100 mt-4">
-            Lorem Ipsum has been the industry's standard dummy text ever since
-          </p>
-        </div>
-        <div className=" absolute bottom-6 right-4 font-bold text-white leading-relaxed ">
-          {" "}
-          <p>© 2025 QuantumPulse Technologies Pvt. Ltd. All Rights Reserved</p>
-        </div>
-      </div>
-    </>
-  );
-};
+      {/* Animations */}
+      <style jsx>{`
+        @keyframes spinClock {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        @keyframes spinAnti {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(-360deg);
+          }
+        }
+      `}</style>
 
-export default AutoCarousel;
+      {/* Visitor Count - bottom right */}
+      {visitorCount !== null && (
+        <p className="absolute bottom-6 right-6 font-medium text-lg text-gray-800">
+         Total Number of Visitors:{" "}
+          <span className="text-blue-700 font-bold">
+            {visitorCount}
+          </span>
+        </p>
+      )}
+    </div>
+  );
+}

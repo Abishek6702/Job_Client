@@ -7,12 +7,12 @@ const About = () => {
       <div className="md:w-1/2 z-10">
         <p className="text-blue-600 font-semibold mb-2 text-2xl">About Us</p>
         <h2 className="text-3xl font-bold mb-4">
-          Boost Your <br /> Business With US
+          Boost Your <br /> Career With US
         </h2>
         <p className="text-gray-600 mb-6">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi.
+          We connect job seekers with top employers, offering smarter 
+          opportunities for growth. Our platform makes job searching simple, 
+          efficient, and rewarding, helping you achieve career success with the right match.
         </p>
         <button className="bg-blue-500  text-white font-semibold py-2 px-6 rounded-full transition-colors duration-200 flex items-center gap-2">
           Know More

@@ -10,17 +10,17 @@ const ClientFeedback = () => {
     {
       id: 1,
       name: "Ratul Sarkar",
-      title: "CEO, Lorem Ipsum",
+      title: "Software Engineer, TechNova",
       review:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "This job portal helped me land my first role in just two weeks. The interface is simple, and job recommendations were highly relevant to my skills. Highly recommended!",
       rating: 5,
     },
     {
-      id: 1,
-      name: " Sarkar",
-      title: "CEO, Lorem Ipsum",
+      id: 2,
+      name: "Priya Mehta",
+      title: "HR Manager, CloudMatrix",
       review:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "As a recruiter, this platform has made hiring much easier. The candidate pool is strong, and the application process is seamless. It saves us time while finding the right talent.",
       rating: 4,
     },
   ];
@@ -54,13 +54,15 @@ const ClientFeedback = () => {
   return (
     <section className="py-16 bg-gray-50 relative">
       <div className="container mx-auto px-4">
-        
+        <h4 className="text-[#078bf7] font-semibold text-center text-3xl mb-2">
+          Services
+        </h4>
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
           Our Client Feedback
         </h2>
         <div className="max-w-4xl mx-auto relative">
           
-          <div className="absolute top-0 left-0 -ml-24 lg:flex hidden flex-wrap justify-center w-24">
+          <div className="absolute top-0 left-0 -ml-24 justify-center w-24 hidden md:flex flex-wrap">
             {avatars.slice(0, 4).map((avatar, index) => {
               const top = Math.floor(Math.random() * 40); 
               const left = Math.floor(Math.random() * 40); 
@@ -71,15 +73,15 @@ const ClientFeedback = () => {
                   alt=""
                   className="rounded-full w-12 h-12 m-1 shadow-sm absolute"
                   style={{
-                    top: `${top}px`,
-                    left: `${left}px`,
+                    top: top + "px",
+                    left: left + "px",
                   }}
                 />
               );
             })}
           </div>
 
-          <div className="absolute top-0 right-0 -mr-24 lg:flex flex-wrap justify-center w-24 hidden ">
+          <div className="absolute top-0 right-0 -mr-24 justify-center w-24 hidden md:flex flex-wrap">
             {avatars.slice(4).map((avatar, index) => {
               const top = Math.floor(Math.random() * 40);
               const right = Math.floor(Math.random() * 40);
@@ -90,8 +92,8 @@ const ClientFeedback = () => {
                   alt=""
                   className="rounded-full w-12 h-12 m-1 shadow-sm absolute"
                   style={{
-                    top: `${top}px`,
-                    right: `${right}px`,
+                    top: top + "px",
+                    right: right + "px",
                   }}
                 />
               );

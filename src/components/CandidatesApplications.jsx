@@ -159,7 +159,7 @@ const CandidatesApplication = () => {
 
   return (
     <div className="main_container ">
-      <div className="card_container ">
+      <div className="card_container  ">
         <div className="px-6 py-4 min-h-screen bg-white">
           <h2 className="text-2xl font-bold mb-4">Jobs Posted</h2>
 
@@ -203,7 +203,7 @@ const CandidatesApplication = () => {
           ) : filteredJobs.length === 0 ? (
             <p>No jobs found for your companies.</p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4  h-[70vh] overflow-y-auto">
               {filteredJobs.map((job) => (
                 <div
                   className="card_container "

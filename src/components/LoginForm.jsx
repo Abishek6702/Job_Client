@@ -8,6 +8,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
 import logo from "../assets/logomain.svg";
 import bgimg from "../assets/bgimg.jpg";
+import AutoCarousel1 from "./AutoCarousel1";
 function autoRedirectBasedOnToken(navigate) {
   const token = localStorage.getItem("token");
   if (token) {
@@ -120,9 +121,9 @@ const LoginForm = () => {
   }, []);
 
   return (
-    <div className="main-container flex ">
-      <div className="left-container w-[100%]  lg:w-[55%] h-[100vh] flex items-center ">
-        <div className="content-container w-[100%] px-8 m-auto ">
+    <div className="main-container flex items-center justify-between gap-8 bg-gray-50 ">
+      <div className="left-container w-[100%]  lg:w-[45%] h-[100vh] flex items-center justify-center   m-auto ">
+        <div className="content-container w-[90%] m-auto ">
           <div className=" w-40 ">
             <img src={logo} className="" />
           </div>
@@ -139,7 +140,7 @@ const LoginForm = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email-Id"
-                className="w-full border border-gray-300 py-2 px-4 text-[16px] rounded-md outline-none"
+                className="w-full border border-gray-300  py-2 px-4 text-[16px] rounded-md outline-none focus:border-[#155dfc] focus:border-2"
               />
             </div>
 
@@ -153,7 +154,7 @@ const LoginForm = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="w-full border border-gray-300 py-2 px-4 rounded-md outline-none text-[16px]"
+                className="w-full border border-gray-300 py-2 px-4 rounded-md outline-none text-[16px] focus:border-[#155dfc] focus:border-2"
               />
 
               <div className="icon absolute bottom-[11px] right-[20px] text-gray-500 hover:text-gray-700">
@@ -201,15 +202,14 @@ const LoginForm = () => {
               </Link>
             </p>
           </form>
-          <p className="absolute bottom-6 font-medium text-lg ">
-            Total Number of Visitors:{" "}
-            <span className="text-blue-700 font-bold">{visitorCount !== null ? visitorCount : "Loading..."}</span>
+          <p className="absolute bottom-6 text-gray-600 ">
+          © 2025 QuantumPulse Technologies Pvt. Ltd. All Rights Reserved
           </p>
         </div>
       </div>
 
-      <div className="right-container w-[45%]  h-[100vh] hidden  lg:flex items-center justify-center">
-        <AutoCarousel />
+      <div className="right-container w-[60%]   h-[100vh] hidden  lg:flex items-center justify-center">
+        <AutoCarousel/>
       </div>
     </div>
   );

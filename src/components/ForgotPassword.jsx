@@ -52,7 +52,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="md:grid grid-cols-2">
+    <div className="md:grid grid-cols-2 bg-gray-50">
       <div className="Left-container   h-[100vh] flex items-center justify-center">
         <div className="content-container w-[90%] p-[8px] mb-[25px] space-y-4">
           <div className="w-40">
@@ -69,7 +69,7 @@ const ForgotPassword = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="outline-none border border-gray-700 rounded-[6px] p-2 px-4 w-full text-[16px] mt-1"
+              className="outline-none border border-gray-300 focus:border-[#155dfc] focus:border-2 rounded-[6px] p-2 px-4 w-full text-[16px] mt-1"
               placeholder="Enter your email-Id"
             />
 

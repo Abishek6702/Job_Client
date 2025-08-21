@@ -484,11 +484,11 @@ const CandidatesApplication = () => {
             selectedApplications.length === 0 &&
             filteredAndSortedApplications.length === 0
           }
-          className={`px-4 py-2 rounded-lg flex items-center justify-center gap-4 ${
+          className={`px-4 py-2 rounded-lg flex items-center justify-center gap-4 w-44  ${
             selectedApplications.length === 0 &&
             filteredAndSortedApplications.length === 0
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blue-600 text-white hover:bg-blue-700"
+              ? "bg-gray-300 cursor-not-allowed "
+              : "bg-blue-600 text-white hover:bg-blue-700 "
           }`}
         >
           <ArrowDownToLine/>

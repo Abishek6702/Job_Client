@@ -25,7 +25,7 @@ export default function Hero() {
       </h1>
 
       <p className="text-md md:text-lg text-gray-600 max-w-[380px] mb-6">
-        Great platform for the job seeker that searching for new career heights and passionate about startups.
+        Discover opportunities that match your skills, passion, and ambition. Your career growth starts here.
       </p>
 
       {/* Buttons row */}
@@ -53,8 +53,8 @@ export default function Hero() {
           </button>
         </div>
 
-        <div className="flex flex-row items-center gap-2 border rounded-4xl w-[194px] h-[50px] justify-center border-blue-600 text-blue-600 ">
-          <h6 className="text-xl font-medium">Live Demo</h6>
+        <div className="flex flex-row items-center gap-2">
+          <h6 className="text-xl font-medium">See Live Demo</h6>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="25"

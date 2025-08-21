@@ -18,8 +18,8 @@ export default function LandingNavbar() {
   const navItems = [
     { name: "Home", to: "home" },
     { name: "About", to: "about" },
-    { name: "Blogs", to: "portfolio" },
-    { name: "Services", to: "services" },
+    // { name: "Blogs", to: "portfolio" },
+    // { name: "Services", to: "services" },
     { name: "Contact", to: "contact" },
   ];
 
@@ -32,7 +32,7 @@ export default function LandingNavbar() {
       <div className="flex items-center justify-between w-full h-[70px]">
         
         {/* Logo */}
-        <h1 className="text-2xl font-bold text-gray-900">DesignersWho</h1>
+        <h1 className=" lg:text-2xl text-1xl font-bold text-gray-900">Sri Eshwar <span className="text-[#155dfc]">Carrer Connect</span></h1>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
@@ -52,7 +52,7 @@ export default function LandingNavbar() {
             to="/login"
             className="font-bold py-2 px-4 rounded-2xl bg-blue-700 hover:bg-blue-900 text-white transition"
           >
-            Login
+            Login / Signup
           </Link>
         </div>
 

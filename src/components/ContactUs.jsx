@@ -60,11 +60,11 @@ const ContactUs = () => {
       <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10 px-4">
         <p className="text-blue-600 font-semibold text-2xl mb-2">Contact Us</p>
         <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-snug">
-          We Would Love To <br /> Hear From You
+          We’d Love to  <br /> Hear From You
         </h2>
         <p className="text-gray-600 mb-6">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Have questions, feedback, or need support? Our team is always ready to assist you. 
+          Whether you’re a job seeker looking for guidance or an employer searching for talent, we’d love to hear from you.
         </p>
 
         <div className="flex items-center space-x-4 mb-6">

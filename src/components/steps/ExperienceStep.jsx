@@ -3,9 +3,22 @@ import ConfirmModal from "../ConfirmModal";
 import { Plus, X } from "lucide-react";
 
 const LOCATION_OPTIONS = [
-  "Coimbatore", "Madurai", "Chennai", "Pollachi", "Cuddalore", "Dharmapuri",
-  "Dindigul", "Erode", "Kallakurichi", "Karur", "Nagapattinam",
-  "Los Angeles", "Salem", "Thanjavur", "Bangalore","Tiruppur"
+  "Coimbatore",
+  "Madurai",
+  "Chennai",
+  "Pollachi",
+  "Cuddalore",
+  "Dharmapuri",
+  "Dindigul",
+  "Erode",
+  "Kallakurichi",
+  "Karur",
+  "Nagapattinam",
+  "Los Angeles",
+  "Salem",
+  "Thanjavur",
+  "Bangalore",
+  "Tiruppur",
 ];
 
 export default function ExperienceStep({ formData, setFormData, errors }) {
@@ -13,6 +26,7 @@ export default function ExperienceStep({ formData, setFormData, errors }) {
   const [deleteIdx, setDeleteIdx] = useState(null);
   const [showSuggestions, setShowSuggestions] = useState({}); // per index suggestions
 
+  // Handle experience array changes
   const handleArrayChange = (idx, e) => {
     const { name, value, type, checked } = e.target;
 
@@ -21,12 +35,10 @@ export default function ExperienceStep({ formData, setFormData, errors }) {
 
       if (name === "present") {
         arr[idx].present = checked;
-
         const today = new Date();
         const formatted = today.toISOString().split("T")[0]; // YYYY-MM-DD
-
         if (checked) {
-          arr[idx].yearTo = formatted; // auto set yearTo to today's date
+          arr[idx].yearTo = formatted;
         } else {
           arr[idx].yearTo = "";
         }
@@ -38,11 +50,11 @@ export default function ExperienceStep({ formData, setFormData, errors }) {
     });
   };
 
+  // Handle location with suggestions
   const handleLocationChange = (idx, e) => {
     const val = e.target.value;
     handleArrayChange(idx, e);
 
-    // Show filtered location suggestions
     setShowSuggestions((prev) => ({
       ...prev,
       [idx]: val
@@ -101,6 +113,52 @@ export default function ExperienceStep({ formData, setFormData, errors }) {
   const handleCancelDelete = () => {
     setShowModal(false);
     setDeleteIdx(null);
+  };
+
+  // Career gap handlers
+  const handleCareerGapChange = (e) => {
+    const { name, value } = e.target;
+    // Radio: name="hasGap", value: "yes" or "no"
+    if (name === "hasGap") {
+      setFormData((prev) => ({
+        ...prev,
+        careerGap: {
+          hasGap: value === "yes",
+          yearFrom: "",
+          yearTo: "",
+          gapDisplay: "",
+        },
+      }));
+    } else {
+      // for yearFrom and yearTo
+      setFormData((prev) => {
+        const updated = {
+          ...prev.careerGap,
+          [name]: value,
+        };
+        // Calculate gap if both exist
+        if (updated.yearFrom && updated.yearTo) {
+          const from = new Date(updated.yearFrom);
+          const to = new Date(updated.yearTo);
+          let diff = (to - from) / (1000 * 60 * 60 * 24 * 30.44); // months
+          if (diff < 0) diff = 0;
+          const years = Math.floor(diff / 12);
+          const months = Math.round(diff % 12);
+          updated.gapDisplay =
+            years > 0
+              ? `${years} year${years > 1 ? "s" : ""}${
+                  months ? ` and ${months} month${months > 1 ? "s" : ""}` : ""
+                }`
+              : `${months} month${months > 1 ? "s" : ""}`;
+        } else {
+          updated.gapDisplay = "";
+        }
+        return {
+          ...prev,
+          careerGap: updated,
+        };
+      });
+    }
   };
 
   return (
@@ -214,17 +272,17 @@ export default function ExperienceStep({ formData, setFormData, errors }) {
                   <p className="text-red-500 text-sm">{errors.location}</p>
                 )}
               </div>
+
               {/* Year From */}
               <div className="flex flex-col gap-1">
                 <label className="font-bold">
-                  Year From <span className="text-red-500">*</span>
+                  Start Date<span className="text-red-500">*</span>
                 </label>
                 <input
                   name="yearFrom"
                   type="date"
                   value={exp.yearFrom}
                   onChange={(e) => handleArrayChange(idx, e)}
-                  // REMOVED: disabled={exp.present}
                   className="border p-2 border-gray-300 rounded-md outline-none"
                 />
                 {errors?.yearFrom && (
@@ -235,14 +293,14 @@ export default function ExperienceStep({ formData, setFormData, errors }) {
               {/* Year To */}
               <div className="flex flex-col gap-1">
                 <label className="font-bold">
-                  Year To <span className="text-red-500">*</span>
+                  End Date <span className="text-red-500">*</span>
                 </label>
                 <input
                   name="yearTo"
                   type="date"
                   value={exp.yearTo}
                   onChange={(e) => handleArrayChange(idx, e)}
-                  disabled={exp.present} // keep this, so Year To can't be edited when Present
+                  disabled={exp.present}
                   className="border p-2 border-gray-300 rounded-md outline-none"
                 />
                 {errors?.yearTo && (
@@ -278,6 +336,78 @@ export default function ExperienceStep({ formData, setFormData, errors }) {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Career Gap Section */}
+      <div className=" ml-4 ">
+        <p className="font-bold">Do you have any career gap?</p>
+        <div className="flex gap-4 mt-2 ">
+          <label className="flex items-center gap-1">
+            <input
+              type="radio"
+              name="hasGap"
+              value="yes"
+              checked={formData.careerGap?.hasGap === true}
+              onChange={handleCareerGapChange}
+            />{" "}
+            Yes
+          </label>
+          <label className="flex items-center gap-1 ">
+            <input
+              type="radio"
+              name="hasGap"
+              value="no"
+              checked={formData.careerGap?.hasGap === false}
+              onChange={handleCareerGapChange}
+            />{" "}
+            No
+          </label>
+        </div>
+
+        {formData.careerGap?.hasGap && (
+          <div className="flex flex-col gap-2 mt-4  sm:p-4 w-full ">
+            <div className="flex flex-row gap-4 w-full ">
+              <div className="flex flex-col flex-1">
+                <label className="font-bold mb-1">
+                  From Date <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="date"
+                  name="yearFrom"
+                  value={formData.careerGap.yearFrom || ""}
+                  onChange={handleCareerGapChange}
+                  className="border p-2 border-gray-300 rounded-md outline-none"
+                  required
+                />
+              </div>
+              <div className="flex flex-col flex-1">
+                <label className="font-bold mb-1">
+                  To Date <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="date"
+                  name="yearTo"
+                  value={formData.careerGap.yearTo || ""}
+                  onChange={handleCareerGapChange}
+                  className="border p-2 border-gray-300 rounded-md outline-none"
+                  required
+                />
+              </div>
+            </div>
+            {formData.careerGap.gapDisplay && (
+              <div className="mt-2 text-base font-semibold text-blue-600">
+                <span className="font-bold text-black">Career gap:</span> {formData.careerGap.gapDisplay}
+              </div>
+            )}
+            {errors?.gap && (
+              <p className="text-red-500 text-sm">{errors.gap}</p>
+            )}
+            <div className="">
+              <label htmlFor="" className="font-bold">Reason:</label>
+             <textarea name="" id="" className="border w-full border-gray-300 rounded-lg h-[80px] outline-none p-2" placeholder="Reason for your career gap"></textarea>
+            </div>
+          </div>
+        )}
       </div>
 
       {showModal && (

@@ -4,11 +4,15 @@ export default function PreviewStep({ formData }) {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">Preview Your Details</h2>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-2 mb-4
-">
+
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-2 mb-4
+"
+      >
         <div className="font-semibold text-gray-700">Name:</div>
-        <div>{formData.firstName} {formData.lastName}</div>
+        <div>
+          {formData.firstName} {formData.lastName}
+        </div>
 
         <div className="font-semibold text-gray-700">Location:</div>
         <div>{formData.location}</div>
@@ -16,14 +20,20 @@ export default function PreviewStep({ formData }) {
         {/* <div className="font-semibold text-gray-700">Salary Expectation:</div>
         <div>{formData.salaryExpectation}</div> */}
 
-        <div className="font-semibold text-gray-700">Preferred Roles:</div> 
+        <div className="font-semibold text-gray-700">Preferred Roles:</div>
         <div>
-          {formData.preferredRoles && formData.preferredRoles.length
-            ? formData.preferredRoles.map(role => (
-                <span key={role} className="inline-block  px-2 py-1 text-xs rounded mr-1 mb-1 text-gray-700">{role}</span>
-              ))
-            : <span className="text-gray-500">---</span>
-          }
+          {formData.preferredRoles && formData.preferredRoles.length ? (
+            formData.preferredRoles.map((role) => (
+              <span
+                key={role}
+                className="inline-block  px-2 py-1 text-xs rounded mr-1 mb-1 text-gray-700"
+              >
+                {role}
+              </span>
+            ))
+          ) : (
+            <span className="text-gray-500">---</span>
+          )}
         </div>
       </div>
 
@@ -35,18 +45,30 @@ export default function PreviewStep({ formData }) {
         {formData.education.map((edu, i) => (
           <div key={i} className=" ">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6 text-sm">
-              <div className="font-semibold text-gray-600">Education Level:</div>
+              <div className="font-semibold text-gray-600">
+                Education Level:
+              </div>
               <div>{edu.level || <span className="text-gray-400">-</span>}</div>
               <div className="font-semibold text-gray-600">Institution:</div>
-              <div>{edu.institution || <span className="text-gray-400">-</span>}</div>
+              <div>
+                {edu.institution || <span className="text-gray-400">-</span>}
+              </div>
               <div className="font-semibold text-gray-600">University:</div>
-              <div>{edu.university || <span className="text-gray-400">-</span>}</div>
+              <div>
+                {edu.university || <span className="text-gray-400">-</span>}
+              </div>
               <div className="font-semibold text-gray-600">Branch:</div>
-              <div>{edu.branch || <span className="text-gray-400">-</span>}</div>
+              <div>
+                {edu.branch || <span className="text-gray-400">-</span>}
+              </div>
               <div className="font-semibold text-gray-600">Year From:</div>
-              <div>{edu.yearFrom || <span className="text-gray-400">-</span>}</div>
+              <div>
+                {edu.yearFrom || <span className="text-gray-400">-</span>}
+              </div>
               <div className="font-semibold text-gray-600">Year To:</div>
-              <div>{edu.yearTo || <span className="text-gray-400">-</span>}</div>
+              <div>
+                {edu.yearTo || <span className="text-gray-400">-</span>}
+              </div>
               <div className="font-semibold text-gray-600">Marks:</div>
               <div>{edu.marks || <span className="text-gray-400">-</span>}</div>
             </div>
@@ -63,22 +85,51 @@ export default function PreviewStep({ formData }) {
           <div key={i} className=" ">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6 text-sm">
               <div className="font-semibold text-gray-600">Company:</div>
-              <div>{exp.company || <span className="text-gray-400">-</span>}</div>
+              <div>
+                {exp.company || <span className="text-gray-400">-</span>}
+              </div>
               <div className="font-semibold text-gray-600">Title:</div>
               <div>{exp.title || <span className="text-gray-400">-</span>}</div>
               <div className="font-semibold text-gray-600">Location:</div>
-              <div>{exp.location || <span className="text-gray-400">-</span>}</div>
+              <div>
+                {exp.location || <span className="text-gray-400">-</span>}
+              </div>
               <div className="font-semibold text-gray-600">Year From:</div>
-              <div>{exp.yearFrom || <span className="text-gray-400">-</span>}</div>
+              <div>
+                {exp.yearFrom || <span className="text-gray-400">-</span>}
+              </div>
               <div className="font-semibold text-gray-600">Year To:</div>
-              <div>{exp.yearTo || <span className="text-gray-400">-</span>}</div>
+              <div>
+                {exp.yearTo || <span className="text-gray-400">-</span>}
+              </div>
               <div className="font-semibold text-gray-600">Description:</div>
-              <div>{exp.description || <span className="text-gray-400">-</span>}</div>
+              <div>
+                {exp.description || <span className="text-gray-400">-</span>}
+              </div>
             </div>
           </div>
         ))}
       </div>
-      
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 items-center">
+        <div className="font-semibold text-gray-600">Career Gap:</div>
+        <div>
+          {formData.careerGap.gapDisplay || (
+            <span className="text-gray-400">-</span>
+          )}
+        </div>
+        <div className="font-semibold text-gray-600">Gap Start:</div>
+        <div>
+          {formData.careerGap.yearFrom || (
+            <span className="text-gray-400">-</span>
+          )}
+        </div>
+        <div className="font-semibold text-gray-600">Gap End:</div>
+        <div>
+          {formData.careerGap.yearTo || (
+            <span className="text-gray-400">-</span>
+          )}
+        </div>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 items-center">
         <div className="font-semibold text-gray-700">Profile Image:</div>
         <div>
@@ -99,7 +150,8 @@ export default function PreviewStep({ formData }) {
       </div>
 
       <div className="text-sm text-gray-500 mt-6">
-        Please review all details before submitting. Use Back to edit any section.
+        Please review all details before submitting. Use Back to edit any
+        section.
       </div>
     </div>
   );
