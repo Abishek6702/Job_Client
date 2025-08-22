@@ -21,6 +21,8 @@
     "emoji-picker-react": "^4.12.2",
     "file-saver": "^2.0.5",
     "framer-motion": "^12.23.12",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.487.0",
     "react": "^19.0.0",

@@ -10,6 +10,7 @@ import {
   Power,
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const menuItems = [
   {
@@ -54,6 +55,7 @@ const EmployerSideBar = () => {
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
+    toast.info("Logout Sucessfully");
   };
   const handleMouseEnter = (title) => {
     setTimeout(() => setHoveredItem(title), 100);

@@ -15,6 +15,8 @@ import InprogressApplicationStatusChange from "./InprogressApplicationStatusChan
 import Loader from "./Loader";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 const statusColor = (status) => {
   if (status === "in progress") return "bg-yellow-100 text-orange-600";
   if (status === "rejected") return "bg-red-100 text-red-600";
@@ -38,6 +40,7 @@ const SelectedApplications = () => {
   const [companyInfo, setCompanyInfo] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 6;
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
@@ -300,6 +303,57 @@ const SelectedApplications = () => {
   const getResumeLink = (app) =>
     `${import.meta.env.VITE_API_BASE_URL}/api/applications/download/${app._id}`;
 
+  const handleDownloadPDF = () => {
+    const dataToExport =
+      selectedApplications.length > 0
+        ? applications.filter((app) => selectedApplications.includes(app._id))
+        : filteredAndSortedApplications;
+
+    if (dataToExport.length === 0) {
+      alert("No data available to export");
+      return;
+    }
+
+    const pdf = new jsPDF();
+    if (companyInfo) {
+      pdf.setFontSize(14);
+      pdf.text(`${companyInfo.name} - ${companyInfo.position}`, 14, 15);
+    }
+
+    const tableColumn = [
+      "Name",
+      "Email",
+      "Phone",
+      "City",
+      "Status",
+      "Total Experience (Years)",
+      // "Company Name",
+      // "Role",
+      // "Applied At",
+    ];
+
+    const tableRows = dataToExport.map((app) => [
+      app.name || "",
+      app.email || "",
+      app.phone || "",
+      app.location || "",
+      app.status,
+      app.experience || "",
+      // companyInfo?.name || app.jobId?.companyId?.company_name || "",
+      // companyInfo?.position || "",
+      // app.createdAt ? new Date(app.createdAt).toLocaleString() : "",
+    ]);
+
+    autoTable(pdf, {
+      head: [tableColumn],
+      body: tableRows,
+      styles: { fontSize: 8, halign: "center" },
+      margin: { top: 20 },
+    });
+
+    pdf.save("CandidatesApplications.pdf");
+  };
+
   return (
     <div className="container mx-auto px-4">
       <button
@@ -388,7 +442,7 @@ const SelectedApplications = () => {
             Clear Filters
           </button>
         </div>
-        <div className=" justify-center lg:justify-end hidden">
+        {/* <div className=" justify-center lg:justify-end hidden">
           <button
             onClick={downloadSelectedResumes}
             disabled={selectedApplications.length === 0}
@@ -400,26 +454,50 @@ const SelectedApplications = () => {
           >
             Download ({selectedApplications.length})
           </button>
-        </div>
+        </div> */}
+        <div className="relative">
         <button
-          onClick={handleDownloadExcel}
+          onClick={() => setDropdownOpen(!isDropdownOpen)}
           disabled={
             selectedApplications.length === 0 &&
             filteredAndSortedApplications.length === 0
           }
-          className={`px-4 py-2 rounded-lg flex items-center justify-center gap-4 ${
+          className={`px-4 py-2 rounded-lg flex items-center justify-center gap-4 w-44  ${
             selectedApplications.length === 0 &&
             filteredAndSortedApplications.length === 0
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blue-600 text-white hover:bg-blue-700"
+              ? "bg-gray-300 cursor-not-allowed "
+              : "bg-blue-600 text-white hover:bg-blue-700 "
           }`}
         >
-          <ArrowDownToLine/>
+          <ArrowDownToLine />
           Download{" "}
           {selectedApplications.length > 0
             ? `(${selectedApplications.length})`
             : ""}
         </button>
+        {isDropdownOpen && (
+          <div className="absolute top-10  bg-white shadow rounded mt-1 z-10 w-44 ">
+            <button
+              className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+              onClick={() => {
+                handleDownloadExcel();
+                setDropdownOpen(false);
+              }}
+            >
+              Download Excel
+            </button>
+            <button
+              className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+              onClick={() => {
+                handleDownloadPDF();
+                setDropdownOpen(false);
+              }}
+            >
+              Download PDF
+            </button>
+          </div>
+        )}
+        </div>
       </div>
       <div className="overflow-x-auto rounded-lg shadow-sm">
         <table className="min-w-full divide-y divide-gray-200 bg-white">

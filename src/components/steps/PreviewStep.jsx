@@ -110,7 +110,7 @@ export default function PreviewStep({ formData }) {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 items-center">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 items-center">
         <div className="font-semibold text-gray-600">Career Gap:</div>
         <div>
           {formData.careerGap.gapDisplay || (
@@ -129,7 +129,7 @@ export default function PreviewStep({ formData }) {
             <span className="text-gray-400">-</span>
           )}
         </div>
-      </div>
+      </div> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4 items-center">
         <div className="font-semibold text-gray-700">Profile Image:</div>
         <div>
