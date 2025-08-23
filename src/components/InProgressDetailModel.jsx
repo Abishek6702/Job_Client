@@ -140,7 +140,7 @@ const InProgressDetailModel = ({ application, onClose, onEditStatus }) => {
                     label="Years"
                     value={
                       edu.yearFrom && edu.yearTo
-                        ? `${edu.yearFrom} - ${edu.yearTo}`
+                        ? `${formatDate(edu.yearFrom)} - ${formatDate(edu.yearTo)}`
                         : "N/A"
                     }
                   />
@@ -170,7 +170,7 @@ const InProgressDetailModel = ({ application, onClose, onEditStatus }) => {
                     label="Years"
                     value={
                       exp.yearFrom && exp.yearTo
-                        ? `${exp.yearFrom} - ${exp.yearTo}`
+                        ? `${formatDate(exp.yearFrom)} - ${formatDate(exp.yearTo)}`
                         : "N/A"
                     }
                   />

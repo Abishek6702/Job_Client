@@ -100,8 +100,9 @@ const ApplicationDetailsModal = ({ application, onClose, onEditStatus }) => {
                 {application.resume && (
                   <div className="flex space-x-4 mt-1">
                     <a
-                      href={`${import.meta.env.VITE_API_BASE_URL}/api/applications/download/${application._id}`
-}
+                      href={`${
+                        import.meta.env.VITE_API_BASE_URL
+                      }/api/applications/download/${application._id}`}
                       download
                       className="text-green-600 hover:underline"
                       target="_blank"
@@ -134,7 +135,9 @@ const ApplicationDetailsModal = ({ application, onClose, onEditStatus }) => {
                     label="Years"
                     value={
                       edu.yearFrom && edu.yearTo
-                        ? `${edu.yearFrom} - ${edu.yearTo}`
+                        ? `${formatDate(edu.yearFrom)} - ${formatDate(
+                            edu.yearTo
+                          )}`
                         : "N/A"
                     }
                   />
@@ -164,7 +167,7 @@ const ApplicationDetailsModal = ({ application, onClose, onEditStatus }) => {
                     label="Years"
                     value={
                       exp.yearFrom && exp.yearTo
-                        ? `${exp.yearFrom} - ${exp.yearTo}`
+                        ? `${formatDate(exp.yearFrom)} - ${formatDate(exp.yearTo)}`
                         : "N/A"
                     }
                   />
