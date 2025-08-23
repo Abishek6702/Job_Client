@@ -185,6 +185,7 @@ const MessageDetail = ({ isMobile, onBack }) => {
                   ? `${recipientProfile.onboarding.firstName} ${recipientProfile.onboarding.lastName}`
                   : recipientProfile.name}
               </h3>
+              <p>{recipientProfile.email}</p>
             </div>
           </div>
         )}

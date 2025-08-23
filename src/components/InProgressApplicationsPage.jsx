@@ -32,6 +32,7 @@ const InProgressApplicationsPage = () => {
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   const [selectedApplications, setSelectedApplications] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [searchLocation, setSearchLocation] = useState("");
   const [experienceRange, setExperienceRange] = useState({ min: 0, max: 100 });
@@ -138,6 +139,14 @@ const InProgressApplicationsPage = () => {
       result.sort(
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+    }
+    if (searchQuery) {
+      const lower = searchQuery.toLowerCase();
+      result = result.filter(
+        (app) =>
+          (app.name && app.name.toLowerCase().includes(lower)) ||
+          (app.email && app.email.toLowerCase().includes(lower))
       );
     }
 
@@ -381,7 +390,7 @@ const InProgressApplicationsPage = () => {
         <span className="text-blue-600">({applications.length})</span>
       </h2>
       {/* Filters */}
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
         {/* Location Search */}
         <div className="relative">
           <input
@@ -395,6 +404,19 @@ const InProgressApplicationsPage = () => {
             <Search className="w-5 h-5" />
           </div>
         </div>
+        <div className="relative">
+  <input
+    type="search"
+    placeholder="Search Name or Email"
+    className="w-full p-2 pl-10 border border-gray-300 rounded-lg bg-gray-50 placeholder-gray-400 outline-none"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+    <Search className="w-5 h-5" />
+  </div>
+</div>
+
 
         <div className="relative">
           <select

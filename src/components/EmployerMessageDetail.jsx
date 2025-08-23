@@ -230,6 +230,7 @@ const MessageDetail = ({ isMobile, onBack }) => {
                   ? `${recipientProfile.onboarding.firstName} ${recipientProfile.onboarding.lastName}`
                   : recipientProfile.name}
               </h3>
+              <p className="text-gray-500">{recipientProfile.email}</p>
             </div>
           </div>
         )}

@@ -41,6 +41,7 @@ const SelectedApplications = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 6;
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isFilterDropdownOpen, setFilterDropdownOpen] = useState(false);
 
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
@@ -51,6 +52,7 @@ const SelectedApplications = () => {
   const [originalApplications, setOriginalApplications] = useState([]);
   const [selectedExperience, setSelectedExperience] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [statusModalApplication, setStatusModalApplication] = useState(null);
@@ -139,6 +141,14 @@ const SelectedApplications = () => {
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
     }
+    if (searchQuery) {
+      const lower = searchQuery.toLowerCase();
+      result = result.filter(
+        (app) =>
+          (app.name && app.name.toLowerCase().includes(lower)) ||
+          (app.email && app.email.toLowerCase().includes(lower))
+      );
+    }
     return result;
   };
 
@@ -192,6 +202,8 @@ const SelectedApplications = () => {
     setApplications(originalApplications);
     setSelectedExperience("");
     setSelectedStatus("");
+    setSearchQuery("");
+    setFilterDropdownOpen(null);
   };
 
   const handleExperienceChange = (e) => {
@@ -376,7 +388,7 @@ const SelectedApplications = () => {
         Selected & Not Selected{" "}
         <span className="text-blue-600">({applications.length})</span>
       </h2>
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4">
+      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
         <div className="relative">
           <input
             type="search"
@@ -389,6 +401,19 @@ const SelectedApplications = () => {
             <Search className="w-5 h-5" />
           </div>
         </div>
+        <div className="relative">
+          <input
+            type="search"
+            placeholder="Search Name or Email"
+            className="w-full p-2 pl-10 border border-gray-300 rounded-lg bg-gray-50 placeholder-gray-400 outline-none"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <Search className="w-5 h-5" />
+          </div>
+        </div>
+
         <div className="relative">
           <select
             className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 appearance-none pr-10 placeholder-gray-400 outline-none"
@@ -407,33 +432,65 @@ const SelectedApplications = () => {
           </div>
         </div>
         <div className="relative">
-          <select
-            className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 appearance-none pr-10 placeholder-gray-400 outline-none"
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
+  <button
+    onClick={() => setFilterDropdownOpen((prev) => (prev === "filters" ? null : "filters"))}
+    className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 flex justify-between items-center"
+  >
+    Filters
+    <ChevronDown />
+  </button>
+
+  {isFilterDropdownOpen === "filters" && (
+    <div className="absolute z-20 mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg">
+      {/* Sort By Date Section */}
+      <div className="p-2 border-b border-gray-100">
+        <p className="text-xs text-gray-500 mb-1">Sort by Date</p>
+        <button
+          className={`block w-full text-left px-3 py-1 text-sm rounded hover:bg-gray-100 ${
+            dateSortOrder === "newest" ? "bg-blue-100 text-blue-600" : ""
+          }`}
+          onClick={() => {
+            setDateSortOrder("newest");
+            setFilterDropdownOpen(null);
+          }}
+        >
+          Newest First
+        </button>
+        <button
+          className={`block w-full text-left px-3 py-1 text-sm rounded hover:bg-gray-100 ${
+            dateSortOrder === "oldest" ? "bg-blue-100 text-blue-600" : ""
+          }`}
+          onClick={() => {
+            setDateSortOrder("oldest");
+            setFilterDropdownOpen(null);
+          }}
+        >
+          Oldest First
+        </button>
+      </div>
+
+      {/* Filter by Status Section */}
+      <div className="p-2">
+        <p className="text-xs text-gray-500 mb-1">Filter by Status</p>
+        {["Selected", "Not Selected"].map((status) => (
+          <button
+            key={status}
+            className={`block w-full text-left px-3 py-1 text-sm rounded hover:bg-gray-100 ${
+              selectedStatus === status ? "bg-blue-100 text-blue-600" : ""
+            }`}
+            onClick={() => {
+              setSelectedStatus(status);
+              setFilterDropdownOpen(null);
+            }}
           >
-            <option value="">Filter by Status</option>
-            <option value="selected">Selected</option>
-            <option value="not selected">Not Selected</option>
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
-            <ChevronDown />
-          </div>
-        </div>
-        <div className="relative">
-          <select
-            className="w-full p-2 border border-gray-300 rounded-lg bg-gray-50 appearance-none pr-10 placeholder-gray-400 outline-none"
-            value={dateSortOrder}
-            onChange={(e) => setDateSortOrder(e.target.value)}
-          >
-            <option value="">Sort by Date</option>
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
-            <ChevronDown />
-          </div>
-        </div>
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </button>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
+
         <div className="flex justify-center lg:justify-start">
           <button
             className="p-2 bg-blue-600 text-white font-semibold rounded-lg border border-gray-300 cursor-pointer"
@@ -456,47 +513,47 @@ const SelectedApplications = () => {
           </button>
         </div> */}
         <div className="relative">
-        <button
-          onClick={() => setDropdownOpen(!isDropdownOpen)}
-          disabled={
-            selectedApplications.length === 0 &&
-            filteredAndSortedApplications.length === 0
-          }
-          className={`px-4 py-2 rounded-lg flex items-center justify-center gap-4 w-44  ${
-            selectedApplications.length === 0 &&
-            filteredAndSortedApplications.length === 0
-              ? "bg-gray-300 cursor-not-allowed "
-              : "bg-blue-600 text-white hover:bg-blue-700 "
-          }`}
-        >
-          <ArrowDownToLine />
-          Download{" "}
-          {selectedApplications.length > 0
-            ? `(${selectedApplications.length})`
-            : ""}
-        </button>
-        {isDropdownOpen && (
-          <div className="absolute top-10  bg-white shadow rounded mt-1 z-10 w-44 ">
-            <button
-              className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-              onClick={() => {
-                handleDownloadExcel();
-                setDropdownOpen(false);
-              }}
-            >
-              Download Excel
-            </button>
-            <button
-              className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-              onClick={() => {
-                handleDownloadPDF();
-                setDropdownOpen(false);
-              }}
-            >
-              Download PDF
-            </button>
-          </div>
-        )}
+          <button
+            onClick={() => setDropdownOpen(!isDropdownOpen)}
+            disabled={
+              selectedApplications.length === 0 &&
+              filteredAndSortedApplications.length === 0
+            }
+            className={`px-4 py-2 rounded-lg flex items-center justify-center gap-4 w-44  ${
+              selectedApplications.length === 0 &&
+              filteredAndSortedApplications.length === 0
+                ? "bg-gray-300 cursor-not-allowed "
+                : "bg-blue-600 text-white hover:bg-blue-700 "
+            }`}
+          >
+            <ArrowDownToLine />
+            Download{" "}
+            {selectedApplications.length > 0
+              ? `(${selectedApplications.length})`
+              : ""}
+          </button>
+          {isDropdownOpen && (
+            <div className="absolute top-10  bg-white shadow rounded mt-1 z-10 w-44 ">
+              <button
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                onClick={() => {
+                  handleDownloadExcel();
+                  setDropdownOpen(false);
+                }}
+              >
+                Download Excel
+              </button>
+              <button
+                className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                onClick={() => {
+                  handleDownloadPDF();
+                  setDropdownOpen(false);
+                }}
+              >
+                Download PDF
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="overflow-x-auto rounded-lg shadow-sm">

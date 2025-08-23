@@ -54,9 +54,9 @@ const ClientFeedback = () => {
   return (
     <section className="py-16 bg-gray-50 relative">
       <div className="container mx-auto px-4">
-        <h4 className="text-[#078bf7] font-semibold text-center text-3xl mb-2">
+        {/* <h4 className="text-[#078bf7] font-semibold text-center text-3xl mb-2">
           Services
-        </h4>
+        </h4> */}
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
           Our Client Feedback
         </h2>
