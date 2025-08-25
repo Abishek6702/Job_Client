@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MoveLeft } from "lucide-react";
+import { ArrowUp, MoveLeft } from "lucide-react";
 
 const DEFAULT_LOCATIONS = [
   "Coimbatore",
@@ -346,7 +346,7 @@ const handleExperienceChange = (e) => {
               </div>
             )}
             <label className="inline-block text-center font-semibold text-lg text-gray-600 bg-gray-200 px-4 py-2 rounded mt-3 cursor-pointer">
-              Change Resume
+             <p className="flex items-center justify-center gap-2"> Update Resume <ArrowUp/></p>
               <input
                 type="file"
                 accept=".pdf,.doc,.docx"
